@@ -11,6 +11,7 @@ MAKE SURE you activate your VIRTUAL ENVIRONMENT for Python and install these pyt
 - pillow
 - opencv
 - numpy
+
 After that, you can run the build&run script (buildnrun.sh for linux and buildnrun.bat for windows).
 
 If you don't fancy using my script, you can always run the program by running
