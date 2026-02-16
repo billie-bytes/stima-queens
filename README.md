@@ -11,7 +11,7 @@ Make sure you activate your virtual environment for python and install these pyt
 - numpy
 
 
-After that, you can run the build script (.sh for linux and .bat for windows).
+After that, you can run the build script (build.sh for linux and build.bat for windows).
 
 # DOCKER ALTERNATIVE
 
