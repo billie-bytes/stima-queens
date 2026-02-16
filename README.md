@@ -2,6 +2,8 @@
 
 A logic game popularized by LinkedIn where you fill the grid so that there is only one Queen per row, column, and colored region.
 
+The queens bruteforce logic are all implemented using C, and all the input/out processing are implemented using Python. The C layer communicates to the Python layer through the Python library of ctypes.
+
 # HOW TO BUILD
 
 Make sure you activate your virtual environment for python and install these python dependancies:
