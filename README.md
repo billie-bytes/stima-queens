@@ -4,16 +4,21 @@ A logic game popularized by LinkedIn where you fill the grid so that there is on
 
 The queens bruteforce logic are all implemented using C, and all the input/out processing are implemented using Python. The C layer communicates to the Python layer through the Python library of ctypes.
 
-# HOW TO BUILD
+# HOW TO BUILD & RUN
 
-Make sure you activate your virtual environment for python and install these python dependancies:
+MAKE SURE you activate your VIRTUAL ENVIRONMENT for Python and install these python dependancies:
 - tkinter
 - pillow
 - opencv
 - numpy
 
+After that, you can run the build&run script (buildnrun.sh for linux and buildnrun.bat for windows).
 
-After that, you can run the build script (build.sh for linux and build.bat for windows).
+If you don't fancy using my script, you can always run the program by running
+```bash
+python3 queens_interface.py
+```
+on the bin folder.
 
 # DOCKER ALTERNATIVE
 
