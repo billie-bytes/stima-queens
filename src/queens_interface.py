@@ -148,6 +148,24 @@ class QueensSolverApp:
         """
         self.step_counter = itercount
 
+    def save_text_solution(self, solution_array):
+        """
+        Saves the solution to a text file where '#' represents a queen.
+        """
+        try:
+            with open("output/final_solution.txt", "w") as f:
+                for r in range(self.grid_size):
+                    row_str = ""
+                    for c in range(self.grid_size):
+                        idx = r * self.grid_size + c
+                        if solution_array[idx] == 1:
+                            row_str += "#"
+                        else:
+                            row_str += self.region_data[idx]
+                    f.write(row_str + "\n")
+            print("Text solution saved to output/final_solution.txt")
+        except Exception as e:
+            print(f"Failed to save text solution: {e}")
 
     def solve_puzzle(self):
         if not self.region_data:
@@ -181,6 +199,7 @@ class QueensSolverApp:
             output_path = "output/final_solution.png"
             generate_board_output(self.current_image_path, solution_array, output_path, self.grid_size)
             self.display_image(output_path, self.label_output_img)
+            self.save_text_solution(solution_array)
             
             if result == -1:
                 return
