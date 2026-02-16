@@ -42,3 +42,7 @@ docker run -it --rm `
     -v ${PWD}:/app/data `
     queens-solver
 ```
+
+
+
+THIS PROJECT IN ITS ENTIRETY IS DESIGNED AND WRITTEN BY ME (Billie Bhaskara Wibawa 13524024)
