@@ -6,11 +6,25 @@ The queens bruteforce logic are all implemented using C, and all the input/out p
 
 # HOW TO BUILD & RUN
 
-MAKE SURE you activate your VIRTUAL ENVIRONMENT for Python and install these python dependancies:
-- tkinter
-- pillow
-- opencv
+MAKE SURE you activate your VIRTUAL ENVIRONMENT for Python and install these python dependencies:
+- tkinter (installed via package manager, not pip)
+- Pillow
+- opencv-python
 - numpy
+
+using
+```bash
+pip install numpy Pillow opencv-python
+```
+or
+```bash
+pip3 install numpy Pillow opencv-python
+```
+If you are on Linux and tkinter is not included in your Python installation, you can install it using your package manager.
+Example:
+```bash
+sudo apt-get install python3-tk
+```
 
 After that, you can run the build&run script (buildnrun.sh for linux and buildnrun.bat for windows).
 
@@ -19,6 +33,7 @@ If you don't fancy using my script, you can always run the program by running
 python3 queens_interface.py
 ```
 on the bin folder.
+
 
 # DOCKER ALTERNATIVE
 
