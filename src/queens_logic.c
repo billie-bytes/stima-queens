@@ -9,7 +9,6 @@ typedef void (*IterCountFunc)(int itercount);
 static int g_iteration_count = 0;
 static int g_update_freq = 0;
 static CallbackFunc interrupt_func = NULL;
-static CallbackFunc iteration_count_report = NULL;
 
 static int is_safe(int i, int j, int size, int solution[size][size], char board[size][size], int occupied_region[256]){
     /* == Row-col check == */
