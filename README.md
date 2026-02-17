@@ -47,6 +47,7 @@ After the image has been built, you can run it using these commands (for Linux o
 sudo docker run -it --rm \
     -e DISPLAY=:0 \
     -v /tmp/.X11-unix:/tmp/.X11-unix \
+    -v "$(pwd):/app/data" \
     queens-solver
 ```
 Or if you are running docker from windows you can run it using
