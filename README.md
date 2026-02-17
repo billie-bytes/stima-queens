@@ -48,6 +48,7 @@ sudo docker run -it --rm \
     -e DISPLAY=:0 \
     -v /tmp/.X11-unix:/tmp/.X11-unix \
     -v "$(pwd):/app/data" \
+    -v "$(pwd)/bin/output:/app/output" \
     queens-solver
 ```
 Or if you are running docker from windows you can run it using
@@ -58,6 +59,7 @@ docker run -it --rm `
     -v ${PWD}:/app/data `
     queens-solver
 ```
+NOTE: If you are running this on docker, add your testcases anywhere inside the project folder. Docker will copy these and put it inside "/app/data"
 
 # HOW TO USE THE APP
 
@@ -69,8 +71,9 @@ After that, you can specify the live-update steps on the top of the window. Put 
 
 Lastly, just press the "Solve Puzzle" button on the upper right corner.
 
-THE SOLUTION OUTPUTS (IMAGE AND TEXT FORM) WILL BE SAVED ON THE "bin/output" FOLDER (IF YOU ARE RUNNING THIS NATIVELY ON YOUR MACHINE).
-IF YOU ARE RUNNING THIS THROUGH DOCKER, IT WILL BE SAVED ON "app/output" FOLDER.
+THE SOLUTION OUTPUTS (IMAGE AND TEXT FORM) WILL BE SAVED ON THE "bin/output" FOLDER.
+
+
 
 
 THIS PROJECT IN ITS ENTIRETY IS DESIGNED AND WRITTEN BY ME (Billie Bhaskara Wibawa 13524024)
