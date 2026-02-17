@@ -94,26 +94,36 @@ class QueensSolverApp:
         if not file_path:
             return
 
-        self.current_image_path = file_path
-        self.display_image(self.current_image_path, self.label_input_img)
-
-        size_val = simpledialog.askinteger("Grid Size", "What is the size of the board? (e.g. 8)", minvalue=4, maxvalue=50)
-        if not size_val:
-            return
-        self.grid_size = size_val
-
-
         try:
             if file_path.lower().endswith(".txt"):
                 with open(file_path, 'r') as f:
                     content = f.read()
+                
+                # Dimension calculations
+                row_length = content.find('\n')
+                string_length = len("".join(content.split()))
+                if(string_length!=(row_length**2)):
+                    raise ValueError(f"Each row must have the same number of characters!")
+                for i in range(string_length):
+                    if((i%(row_length+1)==row_length) and content[i]!='\n'):
+                        raise ValueError(f"Each row must have the same number of characters!")
+                self.grid_size = row_length
+
                 # Create image from txt
                 img_path, region_list = create_board_from_text(content, self.grid_size)
                 self.current_image_path = img_path
                 self.region_data = region_list
                 print(f"Text processed. Image at {img_path}")
+                self.display_image(self.current_image_path, self.label_input_img)
+
             else:
                 # Handle Image Input
+                self.current_image_path = file_path
+                self.display_image(self.current_image_path, self.label_input_img)
+                size_val = simpledialog.askinteger("Grid Size", "What is the size of the board? (e.g. 8)", minvalue=4, maxvalue=50)
+                if not size_val:
+                    return
+                self.grid_size = size_val
                 self.region_data = process_board_input(file_path, self.grid_size)
                 print(f"Image processed for size {self.grid_size}.")
 
