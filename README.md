@@ -58,6 +58,18 @@ docker run -it --rm `
     queens-solver
 ```
 
+# HOW TO USE THE APP
+
+For image inputs, you can use your own image (make sure the dimensions are square-ish, doesn't need to be perfectly square) and give the correct grid size dimensions. If the image is of a 8x8 board, input 8 on the grid size prompt.
+
+For text inputs you only need to provide a .txt file that satisfies the requirements of a square board (same number of rows and columns) and you will not be prompted for the grid size.
+
+After that, you can specify the live-update steps on the top of the window. Put 0 to disable liveupdates for speed benchmarks.
+
+Lastly, just press the "Solve Puzzle" button on the upper right corner.
+
+THE SOLUTION OUTPUTS (IMAGE AND TEXT FORM) WILL BE SAVED ON THE "bin/output" FOLDER (IF YOU ARE RUNNING THIS NATIVELY ON YOUR MACHINE).
+IF YOU ARE RUNNING THIS THROUGH DOCKER, IT WILL BE SAVED ON "app/output" FOLDER.
 
 
 THIS PROJECT IN ITS ENTIRETY IS DESIGNED AND WRITTEN BY ME (Billie Bhaskara Wibawa 13524024)
