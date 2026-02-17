@@ -15,7 +15,7 @@ class QueensSolverApp:
     def __init__(self, root):
         self.root = root
         self.root.title("N-Queens Region Solver")
-        self.root.geometry("950x650")
+        self.root.geometry("1150x650")
 
         # Load the C stuff
         try:
@@ -27,6 +27,7 @@ class QueensSolverApp:
                 ctypes.c_int, # int freq
                 CALLBACK_TYPE, # CallbackFunc cb
                 ITER_COUNT_TYPE, # IterCountFunc itcountfun
+                ctypes.c_int # int isPrune
             ]
             self.lib.solve_queens.restype = ctypes.c_int
         except OSError:
@@ -38,13 +39,18 @@ class QueensSolverApp:
         self.current_image_path = None
         self.region_data = None
         self.step_counter = 0
+        self.early_prune = tk.BooleanVar()
+        self.early_prune.set(False)
 
         self.ui_stuff()
 
     def ui_stuff(self):
-        # Top Frame
+
+
         control_frame = tk.Frame(self.root, pady=10)
         control_frame.pack(side=tk.TOP, fill=tk.X)
+        
+        self.lbl_loading = tk.Label(control_frame, text="Solving...", fg="red", font=("Arial", 12, "bold"))
 
         btn_load = tk.Button(control_frame, text="1. Load File (Img/Txt)", command=self.load_file, width=20, height=2)
         btn_load.pack(side=tk.LEFT, padx=10)
@@ -55,12 +61,15 @@ class QueensSolverApp:
         self.entry_step = tk.Entry(control_frame, width=8, font=("Arial", 10))
         self.entry_step.insert(0, "0") # Default 0 = disabled
         self.entry_step.pack(side=tk.LEFT, padx=(0, 20))
-        
         lbl_note = tk.Label(control_frame, text="(0 to disable for speed benchmarks)", fg="gray", font=("Arial", 8))
         lbl_note.pack(side=tk.LEFT)
 
-        btn_solve = tk.Button(control_frame, text="2. Solve Puzzle", command=self.solve_puzzle, width=20, height=2, bg="#dddddd")
-        btn_solve.pack(side=tk.RIGHT, padx=20)
+
+        check_prune = tk.Checkbutton(control_frame, text="Toggle early pruning", font=("Arial",10), variable=self.early_prune)
+        check_prune.pack(side=tk.LEFT, padx=(20,5))
+
+        self.btn_solve = tk.Button(control_frame, text="2. Solve Puzzle", command=self.solve_puzzle, width=20, height=2, bg="#dddddd")
+        self.btn_solve.pack(side=tk.RIGHT, padx=20)
 
         # Main Frame
         image_frame = tk.Frame(self.root)
@@ -103,10 +112,10 @@ class QueensSolverApp:
                 row_length = content.find('\n')
                 string_length = len("".join(content.split()))
                 if(string_length!=(row_length**2)):
-                    raise ValueError(f"Each row must have the same number of characters!")
+                    raise ValueError("Each row must have the same number of characters!")
                 for i in range(string_length):
                     if((i%(row_length+1)==row_length) and content[i]!='\n'):
-                        raise ValueError(f"Each row must have the same number of characters!")
+                        raise ValueError("Each row must have the same number of characters!")
                 self.grid_size = row_length
 
                 # Create image from txt
@@ -197,11 +206,16 @@ class QueensSolverApp:
             c_func = CALLBACK_TYPE(self.c_interrupt)
             c_iter_func = ITER_COUNT_TYPE(self.c_iter_count)
 
+            self.lbl_loading.pack(side=tk.LEFT, padx=10)
+            self.root.update()
+
             # Sikat
+            result = None
             start_time = time.perf_counter()
-
-
-            result = self.lib.solve_queens(self.grid_size, board_array, solution_array, step_n, c_func, c_iter_func)
+            if self.early_prune.get():
+                result = self.lib.solve_queens(self.grid_size, board_array, solution_array, step_n, c_func, c_iter_func, 1)
+            else:
+                result = self.lib.solve_queens(self.grid_size, board_array, solution_array, step_n, c_func, c_iter_func, 0)
             
             time_elapsed = time.perf_counter() - start_time
 
@@ -213,6 +227,10 @@ class QueensSolverApp:
             
             if result == -1:
                 return
+            elif result == -2:
+                raise ValueError("Boards cannot have disconnected color islands!")
+            elif result == -3:
+                raise ValueError("Number of colors doesn't match size of board!")
             elif result == 0:
                 messagebox.showinfo("Done", f"No solutions found :(")
             else:
@@ -221,6 +239,8 @@ class QueensSolverApp:
         except Exception as e:
             messagebox.showerror("Error", f"Solver failed: {e}")
             return
+        finally:
+            self.lbl_loading.pack_forget()
 
     def display_image(self, path, label_widget):
         img = Image.open(path)

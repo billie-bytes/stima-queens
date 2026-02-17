@@ -5,6 +5,9 @@ from PIL import Image, ImageDraw
 import os
 
 def are_colors_similar(c1, c2, threshold=20):
+    """
+    Without this the color parsing is way less accurate
+    """
     r1, g1, b1 = c1
     r2, g2, b2 = c2
     dist = np.sqrt((r1 - r2)**2 + (g1 - g2)**2 + (b1 - b2)**2)
