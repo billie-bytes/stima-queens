@@ -23,5 +23,6 @@ COPY --from=compiler /app/queens_logic.so .
 COPY src/*.py .
 COPY queen_asset.png . 
 COPY input_samples/*.png .
+COPY input_samples/*.txt .
 
 CMD ["python", "queens_interface.py"]
